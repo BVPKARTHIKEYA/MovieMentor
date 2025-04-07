@@ -1,56 +1,75 @@
-🎬 MovieMentor – A Content-Based Movie Recommendation System
-MovieMentor is a personalized movie recommendation system that uses content-based filtering to suggest films tailored to individual user preferences. This part of the project focuses solely on the preprocessing stage — a vital step to prepare the dataset for building an efficient and accurate recommendation model.
+# 🎬 MovieMentor – A Content-Based Movie Recommendation System
 
-🔧 Preprocessing Overview
-1. Merging the Datasets
-Two datasets, movies.csv and credits.csv, are merged based on the movie title. This ensures all relevant information such as overview, genres, cast, crew, and keywords is available in a single structured format.
+**MovieMentor** is a personalized movie recommendation system that uses **content-based filtering** to suggest films tailored to individual user preferences.  
+This section focuses on the **preprocessing stage**, which prepares the dataset for building an efficient and accurate recommendation model.
 
-2. Selecting Relevant Columns
-Only the essential columns are retained for the recommendation system. These include:
+---
 
-Movie ID
+## 🔧 Preprocessing Overview
 
-Title
+### 📌 1. Merging the Datasets
+Two datasets – `movies.csv` and `credits.csv` – are merged using the **movie title** as the key.  
+This ensures that information such as **overview, genres, cast, crew, and keywords** is unified into a single structured dataset.
 
-Overview
+---
 
-Genres
+### 📌 2. Selecting Relevant Columns
+Only the essential columns are retained for the recommendation engine. These include:
 
-Keywords
+- 🎥 `movie_id`  
+- 🎞️ `title`  
+- 📝 `overview`  
+- 🎭 `genres`  
+- 🗝️ `keywords`  
+- 👥 `cast`  
+- 🎬 `crew`  
 
-Cast
+Removing unnecessary columns reduces noise and improves the performance of the recommendation system.
 
-Crew
+---
 
-Removing unnecessary columns helps reduce noise and improve performance.
+### 📌 3. Handling Missing Values
+Rows with **missing or null values** in key fields are identified and removed.  
+This ensures high-quality data and prevents errors during feature extraction and model building.
 
-3. Handling Missing Values
-Rows with missing or null values in important fields are identified and removed to maintain data quality and avoid processing errors during model training.
+---
 
-4. Cleaning & Transforming Data
-The metadata fields such as genres, keywords, cast, and crew are initially in complex nested structures. These are simplified by:
+### 📌 4. Cleaning & Transforming Data
+Many of the metadata fields (like `genres`, `keywords`, `cast`, and `crew`) are stored as nested structures. These are cleaned and simplified by:
 
-Extracting genre names
+- ✅ Extracting names from the **genres** and **keywords** fields  
+- ✅ Selecting the top **3 cast members** from the cast list  
+- ✅ Extracting the **director's name** from the crew  
+- ✅ Splitting the `overview` into individual words (tokens)  
 
-Selecting top cast members
+This transformation makes the data suitable for **text-based similarity analysis**.
 
-Identifying the director from the crew
+---
 
-Splitting the movie overview into keywords
+### 📌 5. Creating a Unified `tags` Column
+To consolidate all descriptive features of a movie, a new column called `tags` is created. It combines:
 
-This makes the data usable for text-based similarity analysis.
+- 📝 Overview  
+- 🎭 Genres  
+- 🗝️ Keywords  
+- 👥 Cast  
+- 🎬 Crew (Director)  
 
-5. Creating a Unified ‘Tags’ Column
-To consolidate all important descriptive data, a new column called tags is created. It combines:
+This column serves as the **core feature** for content-based recommendations, containing all essential textual information in a single place.
 
-Overview
+---
 
-Genres
+### 📌 6. Final Cleaned DataFrame
+The final preprocessed DataFrame includes:
 
-Keywords
+- 🎥 `movie_id`  
+- 🎞️ `title`  
+- 🏷️ `tags`  
 
-Cast
+This dataset is now ready for **vectorization** and **similarity calculations** using NLP techniques like **TF-IDF** and **cosine similarity**.
 
-Crew (Director)
+---
 
-This column represents the core content-based features for each movie in a single textual format.
+✨ **Next Step:**  
+Proceed to vectorize the `tags` and build the recommendation engine based on content similarity.
+
