@@ -3,6 +3,8 @@ import pickle
 import pandas as pd
 import requests
 import os
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 # --- Configuration ---
 st.set_page_config(page_title="Movie Mentor", layout="wide")
@@ -13,16 +15,15 @@ theme = st.radio("Choose Theme", ["Light", "Dark"], horizontal=True)
 # --- Custom CSS ---
 def inject_custom_css(theme="light"):
     dark_blue = "#00008B"
-
     if theme == "dark":
         st.markdown(f"""
             <style>
             html, body, .stApp {{
                 background-color: #000000;
-                color: orange !important;
+                color: white !important;
             }}
             * {{
-                color:orange !important;
+                color: orange !important;
             }}
             .movie-box {{
                 height: 175px;
@@ -34,7 +35,6 @@ def inject_custom_css(theme="light"):
                 box-shadow: 0 0 10px #222;
                 color: white !important;
             }}
-            /* Override selectbox/dropdown */
             .stSelectbox div[data-baseweb="select"] * {{
                 color: black !important;
                 background-color: white !important;
@@ -79,7 +79,13 @@ READ_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYTI3ZTMxNzM2NmY2ZTkyYmY5Zj
 # --- Load Data ---
 movies_dict = pickle.load(open('movie_dict.pkl', 'rb'))
 movies = pd.DataFrame(movies_dict)
-similarity = pickle.load(open('similarity.pkl', 'rb'))
+
+# --- Preprocessing for TF-IDF Similarity ---
+movies['combined'] = movies['title'] + " " + movies.get('overview', "")
+movies['combined'] = movies['combined'].fillna("")
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf.fit_transform(movies['combined'])
+similarity = cosine_similarity(tfidf_matrix)
 
 # --- Fetch Poster ---
 def fetch_poster(movie_id):
