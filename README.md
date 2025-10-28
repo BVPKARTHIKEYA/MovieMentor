@@ -73,3 +73,6 @@ This dataset is now ready for **vectorization** and **similarity calculations** 
 ✨ **Next Step:**  
 Proceed to vectorize the `tags` and build the recommendation engine based on content similarity.
 
+---
+
+![WhatsApp Image 2025-10-28 at 14 29 47_aa9ef734](https://github.com/user-attachments/assets/d6514ec8-85ba-416d-a58a-764d2c9ebb55)
