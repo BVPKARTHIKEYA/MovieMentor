@@ -71,7 +71,7 @@ This dataset is now ready for **vectorization** and **similarity calculations** 
 ---
 
 ✨ **Next Step:**  
-Proceed to vectorize the `tags` and build the recommendation engine based on content similarity.
+Creating a user interactive front-end using streamlit and it is still in prooduction stage.
 
 ---
 
